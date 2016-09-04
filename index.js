@@ -10,7 +10,7 @@ if (env == 'development') {
 }
 var dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
 
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 router.get('/', function (req, res) {
     res.send('Hello world');

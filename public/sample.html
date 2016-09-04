@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+  <div id="root" class="list-group">
+  </div>
+  <div id="dir" class="list-group">
+  </div>
+  <script>
+$(function() {
+  var ls = function(path, to){
+    $.getJSON('/api/ls', {path: path})
+      .done(function(data) {
+        data.entries.forEach(function(item){
+          var tag = item['.tag'];
+          var isfolder = (tag == 'folder');
+          var icon = isfolder
+            ? ' glyphicon glyphicon-folder-open'
+            : ' glyphicon glyphicon-download';
+          var atag = $("<a>",{
+            "id": item.name,
+            "href": isfolder
+              ? '#' + item.path_display
+              : '/api/dl?path=' + item.path_display,
+            "class": 'list-group-item ' + tag + icon,
+            text:  ' ' + item.name
+          });
+          $(to).append(atag);
+        });
+      });
+  }
+  var link = function(path, aid){
+    $.getJSON('/api/link', {path: path})
+      .done(function(data) {
+        var sid = '#' + aid;
+        $(sid).removeClass('file');
+        $(sid).attr('href', data.url);
+        $(sid).text(aid + ' download');
+      });
+  }
+  var getPath = function(event){
+    return event.target.href.split('#')[1];
+  }
+
+  ls('', '#root');
+
+  $(document).on('click','.folder',function(event){
+    ls(getPath(event), '#dir');
+    return false;
+  });
+});
+</script>
+</body>
+</html>
