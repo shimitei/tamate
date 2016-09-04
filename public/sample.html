@@ -20,6 +20,7 @@ $(function() {
   var ls = function(path, to){
     $.getJSON('/api/ls', {path: path})
       .done(function(data) {
+        $(to).empty();
         data.entries.forEach(function(item){
           var tag = item['.tag'];
           var isfolder = (tag == 'folder');
