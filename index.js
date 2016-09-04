@@ -9,18 +9,29 @@ if (env == 'development') {
     require('dotenv').config();
 }
 var dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
-dbx.filesListFolder({path: ''})
-  .then(function(response) {
-    console.log(response);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
 
 //app.use(express.static('public'));
 
 router.get('/', function (req, res) {
     res.send('Hello world');
+});
+router.get('/api/ls', function (req, res) {
+    dbx.filesListFolder({path: req.param('path')})
+        .then(function(response) {
+            res.send(response);
+        })
+        .catch(function(error) {
+            res.send(error);
+        });
+});
+router.get('/api/link', function (req, res) {
+    dbx.sharingCreateSharedLink({path: req.param('path')})
+        .then(function(response) {
+            res.send(response);
+        })
+        .catch(function(error) {
+            res.send(error);
+        });
 });
 app.use(router);
 
