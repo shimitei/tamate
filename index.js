@@ -33,6 +33,15 @@ router.get('/api/link', function (req, res) {
             res.send(error);
         });
 });
+router.get('/api/dl', function (req, res) {
+    dbx.sharingCreateSharedLink({path: req.param('path')})
+        .then(function(response) {
+            res.redirect(url=response.url.replace('?dl=0', '?dl=1'));
+        })
+        .catch(function(error) {
+            res.send(error);
+        });
+});
 app.use(router);
 
 var port = process.env.PORT || 3000;
