@@ -16,7 +16,7 @@ router.get('/', function (req, res) {
     res.send('Hello world');
 });
 router.get('/api/ls', function (req, res) {
-    dbx.filesListFolder({path: req.param('path')})
+    dbx.filesListFolder({path: req.query.path})
         .then(function(response) {
             res.send(response);
         })
@@ -25,7 +25,7 @@ router.get('/api/ls', function (req, res) {
         });
 });
 router.get('/api/link', function (req, res) {
-    dbx.sharingCreateSharedLink({path: req.param('path')})
+    dbx.sharingCreateSharedLink({path: req.query.path})
         .then(function(response) {
             res.send(response);
         })
@@ -34,7 +34,7 @@ router.get('/api/link', function (req, res) {
         });
 });
 router.get('/api/dl', function (req, res) {
-    dbx.sharingCreateSharedLink({path: req.param('path')})
+    dbx.sharingCreateSharedLink({path: req.query.path})
         .then(function(response) {
             res.redirect(url=response.url.replace('?dl=0', '?dl=1'));
         })
