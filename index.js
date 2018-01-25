@@ -1,14 +1,15 @@
-var express = require('express');
-var app = express();
-var router = express.Router();
-var http = require('http').Server(app);
-var Dropbox = require('dropbox');
+require('isomorphic-fetch');
+const express = require('express');
+const app = express();
+const router = express.Router();
+const http = require('http').Server(app);
+const Dropbox = require('dropbox').Dropbox;
 
-var env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 if (env == 'development') {
     require('dotenv').config();
 }
-var dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
+const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
 
 app.use(express.static('public'));
 
@@ -36,7 +37,7 @@ router.get('/api/link', function (req, res) {
 router.get('/api/dl', function (req, res) {
     dbx.sharingCreateSharedLink({path: req.query.path})
         .then(function(response) {
-            res.redirect(url=response.url.replace('?dl=0', '?dl=1'));
+            res.redirect(response.url.replace('?dl=0', '?dl=1'));
         })
         .catch(function(error) {
             res.send(error);
@@ -44,7 +45,7 @@ router.get('/api/dl', function (req, res) {
 });
 app.use(router);
 
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 http.listen(port, function () {
     console.log('listening on *:', port);
 });

@@ -1,11 +1,11 @@
 {
   "name": "tamate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint index.js && nsp check"
   },
   "repository": {
     "type": "git",
@@ -18,12 +18,17 @@
   },
   "homepage": "https://github.com/shimitei/tamate#readme",
   "engines": {
-    "node": "6.9.0",
-    "npm": "3.10.8"
+    "node": "8.9.4",
+    "npm": "5.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "nsp": "^3.1.0"
   },
   "dependencies": {
-    "dotenv": "^2.0.0",
-    "dropbox": "^2.3.0",
-    "express": "^4.14.0"
+    "dotenv": "^4.0.0",
+    "dropbox": "^3.0.2",
+    "express": "^4.16.2",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
