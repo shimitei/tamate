@@ -24,16 +24,24 @@ $(function() {
         data.entries.forEach(function(item){
           var tag = item['.tag'];
           var isfolder = (tag == 'folder');
+          var isInfo = (item.name.indexOf('readme.') == 0);
           var icon = isfolder
             ? ' glyphicon glyphicon-folder-open'
-            : ' glyphicon glyphicon-download';
+            : (item.name.slice(-4).toLowerCase() == '.dmg')
+              ? ' glyphicon glyphicon-apple'
+              : isInfo
+                ? ' glyphicon glyphicon glyphicon-info-sign'
+                :  ' glyphicon glyphicon-download';
           var atag = $("<a>",{
             "id": item.name,
             "href": isfolder
               ? '#' + item.path_display
-              : '/api/dl?path=' + item.path_display,
+              : isInfo
+                ? '/api/more?path=' + item.path_display
+                : '/api/dl?path=' + item.path_display,
             "class": 'list-group-item ' + tag + icon,
-            text:  ' ' + item.name
+            text:  ' ' + item.name,
+            target: '_blank'
           });
           $(to).append(atag);
         });

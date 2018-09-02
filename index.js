@@ -14,11 +14,14 @@ const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
 app.use(express.static('public'));
 
 router.get('/', function (req, res) {
-    res.send('Hello world');
+    res.redirect(302, 'sample.html');
 });
 router.get('/api/ls', function (req, res) {
-    dbx.filesListFolder({path: req.query.path})
+    dbx.filesListFolder({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
+            !response.entries || response.entries.forEach(function(item){
+                item.path_display = encodeURIComponent(item.path_display);
+            });
             res.send(response);
         })
         .catch(function(error) {
@@ -26,7 +29,7 @@ router.get('/api/ls', function (req, res) {
         });
 });
 router.get('/api/link', function (req, res) {
-    dbx.sharingCreateSharedLink({path: req.query.path})
+    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
             res.send(response);
         })
@@ -35,9 +38,18 @@ router.get('/api/link', function (req, res) {
         });
 });
 router.get('/api/dl', function (req, res) {
-    dbx.sharingCreateSharedLink({path: req.query.path})
+    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
             res.redirect(response.url.replace('?dl=0', '?dl=1'));
+        })
+        .catch(function(error) {
+            res.send(error);
+        });
+});
+router.get('/api/more', function (req, res) {
+    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
+        .then(function(response) {
+            res.redirect(response.url); // ?dl=0
         })
         .catch(function(error) {
             res.send(error);
