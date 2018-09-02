@@ -21,8 +21,6 @@ Dropbox JavaScript SDK (Dropbox API v2)をNode.jsで使用しています。
 
 ## ToDo
 
-- Bootstrap 4対応
-- Node.js v10対応
 - jQuery依存の削除
 - SPAへ移行
 - PWA対応
