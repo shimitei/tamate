@@ -1,4 +1,4 @@
-require('isomorphic-fetch');
+const fetch = require('isomorphic-fetch');
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV || 'development';
 if (env == 'development') {
     require('dotenv').config();
 }
-const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
+const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN, fetch: fetch });
 
 app.use(express.static('public'));
 
