@@ -18,14 +18,14 @@
   },
   "homepage": "https://github.com/shimitei/tamate#readme",
   "engines": {
-    "node": "12.8.0",
+    "node": "12.9.1",
     "npm": "6.10.2"
   },
   "devDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^6.2.2"
   },
   "dependencies": {
-    "dotenv": "^8.0.0",
+    "dotenv": "^8.1.0",
     "dropbox": "^4.0.30",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1"
