@@ -1,4 +1,4 @@
-const fetch = require('isomorphic-fetch');
+const fetch = require('cross-fetch');
 const express = require('express');
 const app = express();
 const router = express.Router();
