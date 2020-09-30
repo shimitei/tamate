@@ -19,10 +19,10 @@ router.get('/', function (req, res) {
 router.get('/api/ls', function (req, res) {
     dbx.filesListFolder({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
-            !response.entries || response.entries.forEach(function(item){
+            !response.result.entries || response.result.entries.forEach(function(item){
                 item.path_display = encodeURIComponent(item.path_display);
             });
-            res.send(response);
+            res.send(response.result);
         })
         .catch(function(error) {
             res.send(error);
@@ -31,7 +31,7 @@ router.get('/api/ls', function (req, res) {
 router.get('/api/link', function (req, res) {
     dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
-            res.send(response);
+            res.send(response.result);
         })
         .catch(function(error) {
             res.send(error);
@@ -40,7 +40,7 @@ router.get('/api/link', function (req, res) {
 router.get('/api/dl', function (req, res) {
     dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
-            res.redirect(response.url.replace('?dl=0', '?dl=1'));
+            res.redirect(response.result.url.replace('?dl=0', '?dl=1'));
         })
         .catch(function(error) {
             res.send(error);
@@ -49,7 +49,7 @@ router.get('/api/dl', function (req, res) {
 router.get('/api/more', function (req, res) {
     dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
-            res.redirect(response.url); // ?dl=0
+            res.redirect(response.result.url); // ?dl=0
         })
         .catch(function(error) {
             res.send(error);
