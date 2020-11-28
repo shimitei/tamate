@@ -28,30 +28,42 @@ router.get('/api/ls', function (req, res) {
         });
 });
 router.get('/api/link', function (req, res) {
-    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
+    dbx.sharingCreateSharedLinkWithSettings({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
             res.send(response.result);
         })
         .catch(function(error) {
-            res.send(error);
+            if (error.error && error.error.error && error.error.error.shared_link_already_exists) {
+                res.send(error.error.error.shared_link_already_exists.metadata);
+            } else {
+                res.send(error);
+            }
         });
 });
 router.get('/api/dl', function (req, res) {
-    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
+    dbx.sharingCreateSharedLinkWithSettings({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
             res.redirect(response.result.url.replace('?dl=0', '?dl=1'));
         })
         .catch(function(error) {
-            res.send(error);
+            if (error.error && error.error.error && error.error.error.shared_link_already_exists) {
+                res.redirect(error.error.error.shared_link_already_exists.metadata.url.replace('?dl=0', '?dl=1'));
+            } else {
+                res.send(error);
+            }
         });
 });
 router.get('/api/more', function (req, res) {
-    dbx.sharingCreateSharedLink({path: decodeURIComponent(req.query.path)})
+    dbx.sharingCreateSharedLinkWithSettings({path: decodeURIComponent(req.query.path)})
         .then(function(response) {
             res.redirect(response.result.url); // ?dl=0
         })
         .catch(function(error) {
-            res.send(error);
+            if (error.error && error.error.error && error.error.error.shared_link_already_exists) {
+                res.redirect(error.error.error.shared_link_already_exists.metadata.url); // ?dl=0
+            } else {
+                res.send(error);
+            }
         });
 });
 app.use(router);
