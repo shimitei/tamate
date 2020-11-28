@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/shimitei/tamate#readme",
   "engines": {
-    "node": "14.x",
-    "npm": "6.x"
+    "node": "15.x",
+    "npm": "7.x"
   },
   "devDependencies": {
     "eslint": "^7.x"
