@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/shimitei/tamate#readme",
   "engines": {
-    "node": "15.x",
+    "node": "16.x",
     "npm": "7.x"
   },
   "devDependencies": {
