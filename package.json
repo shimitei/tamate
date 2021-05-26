@@ -25,8 +25,8 @@
     "eslint": "^7.x"
   },
   "dependencies": {
-    "dotenv": "^9.0.0",
-    "dropbox": "^9.6.0",
-    "express": "^4.17.1"
+    "dotenv": "^10.x",
+    "dropbox": "^9.x",
+    "express": "^4.x"
   }
 }
